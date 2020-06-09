@@ -10,11 +10,31 @@ namespace MyBankAcoount.Core
 {
     public class Engine
     {
-        private const string FileName = "money.json";
+        private string FileName = "money.json";
         private Account account;
+        
+        private void ManageAccounts()
+        {
+            bool isLoginSuccessful = false;
+            while (!isLoginSuccessful)
+            {
+                Console.WriteLine("Commands: Login, Register");
+                var command = Console.ReadLine();
 
+                if (command == "Login")
+                {
+                    isLoginSuccessful = Login();
+                }
+                else if (command == "Register")
+                {
+                    isLoginSuccessful = Register();
+                }
+            }
+        }
+        
         public void Run()
         {
+            ManageAccounts();
             if (BankReader.Exist(FileName))
             {
                 double initialBalance = BankReader.ReadBalance(FileName);
@@ -110,6 +130,48 @@ namespace MyBankAcoount.Core
                     break;
                 }
             }
+        }
+
+        private bool Register()
+        {
+            Console.Write("Username: ");
+            var username = Console.ReadLine();
+
+            if(BankReader.DoesUsernameExist(username))
+            {
+                Console.WriteLine("Username already taken.");
+                return Register();
+            }
+
+            Console.Write("Password: ");
+            var password = Console.ReadLine();
+
+            Console.Write("Email: ");
+            var email = Console.ReadLine();
+
+            Console.Write("Full Name: ");
+            var fullName = Console.ReadLine();
+
+            this.FileName = Guid.NewGuid().ToString();
+            BankWriter.CreateAccount(username, fullName, email, password, this.FileName);
+            return true;
+        }
+
+        private bool Login()
+        {
+            Console.Write("Username: ");
+            var username = Console.ReadLine();
+
+            Console.Write("Password: ");
+            var password = Console.ReadLine();
+
+            if (BankReader.IsUserPasswordCorrect(username, password))
+            {
+                FileName = BankReader.FindUserFileName(username);
+                return true;
+            }
+
+            return false;
         }
     }
 }

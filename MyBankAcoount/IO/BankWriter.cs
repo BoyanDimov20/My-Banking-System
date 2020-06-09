@@ -11,6 +11,8 @@ namespace MyBankAcoount.IO
 {
     public class BankWriter
     {
+        private const string BankAccountsFile = "bankAccounts.json";
+
         public static void Append(string fileName, double value)
         {
             using (var stream = new StreamWriter(fileName, append: true))
@@ -27,5 +29,24 @@ namespace MyBankAcoount.IO
                 stream.Write("0");
             }
         }
+
+        public static void CreateAccount(string username, string fullName, string email, string password, string fileName)
+        {
+            User user = new User
+            {
+                Username = username,
+                FullName = fullName,
+                Email = email,
+                HashPassoword = User.Hash(password),
+                FileName = fileName,
+            };
+
+            using (var stream = new StreamWriter(BankAccountsFile, append: true))
+            {
+                var json = new JavaScriptSerializer().Serialize(user);
+                stream.WriteLine(json);
+            }
+        }
+
     }
 }

@@ -10,6 +10,8 @@ namespace MyBankAcoount.IO
 {
     public class BankReader
     {
+        private const string BankAccountsFile = "bankAccounts.json";
+
         public static bool Exist(string fileName)
         {
             return File.Exists(fileName);
@@ -26,6 +28,26 @@ namespace MyBankAcoount.IO
         public static Income[] ReadIncomes(string fileName)
         {
             return File.ReadAllLines(fileName).Select(Income.Parse).ToArray();
+        }
+
+        private static User[] ReadAllUsers()
+        {
+            return File.ReadAllLines(BankAccountsFile).Select(User.Parse).ToArray();
+        }
+
+        public static string FindUserFileName(string username)
+        {
+            return ReadAllUsers().First(x => x.Username == username).FileName;
+        }
+
+        public static bool IsUserPasswordCorrect(string username, string password)
+        {
+            return ReadAllUsers().Any(x => x.Username == username && User.Hash(password) == x.HashPassoword);
+        }
+
+        public static bool DoesUsernameExist(string username)
+        {
+            return ReadAllUsers().Any(x => x.Username == username);
         }
     }
 }

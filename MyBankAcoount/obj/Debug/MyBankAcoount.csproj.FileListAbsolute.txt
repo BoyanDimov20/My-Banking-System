@@ -75,3 +75,4 @@ C:\Users\Boyan\source\repos\MyBankAcoount\MyBankAcoount\bin\Debug\Newtonsoft.Jso
 C:\Users\Boyan\source\repos\MyBankAcoount\MyBankAcoount\obj\Debug\MyBankAcoount.csproj.CopyComplete
 C:\Users\Boyan\source\repos\MyBankAcoount\MyBankAcoount\obj\Debug\MyBankAcoount.exe
 C:\Users\Boyan\source\repos\MyBankAcoount\MyBankAcoount\obj\Debug\MyBankAcoount.pdb
+C:\Users\Boyan\source\repos\MyBankAcoount\MyBankAcoount\bin\Debug\Newtonsoft.Json.dll

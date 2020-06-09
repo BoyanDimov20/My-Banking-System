@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Newtonsoft.Json.Linq;
 
 namespace MyBankAcoount
 {
@@ -17,13 +18,21 @@ namespace MyBankAcoount
 
         public string HashPassoword { get; set; }
 
-        public static string Login(string username, string password)
+        public string FileName { get; set; }
+
+        public static User Parse(string json)
         {
-            throw new NotImplementedException();
-            // TO DO
+            User user = new User();
+            JObject jObject = JObject.Parse(json);
+            user.Username = (string)jObject["Username"];
+            user.FullName = (string)jObject["FullName"];
+            user.Email = (string)jObject["Email"];
+            user.HashPassoword = (string)jObject["HashPassoword"];
+            user.FileName = (string)jObject["FileName"];
+            return user;
         }
 
-        private static string Hash(string password)
+        public static string Hash(string password)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(password);
             SHA256Managed hashstring = new SHA256Managed();
